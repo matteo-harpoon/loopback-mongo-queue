@@ -1,17 +1,19 @@
 {
-  "name": "Log",
-  "base": "TransientModel",
+  "name": "QProfiler",
+  "base": "Model",
   "properties": {
-    "args": {
-      "type": "array"
+    "qTask": {
+      "type": "object"
     },
-    "time": {
-      "type": "date",
-      "defaultFn": "now"
+    "qLog": {
+      "type": "object",
+      "default": {}
     },
-    "type": {
-      "type": "string",
-      "required": true
+    "qSteps": {
+      "type": [
+        "string"
+      ],
+      "default": []
     }
   },
   "validations": [],

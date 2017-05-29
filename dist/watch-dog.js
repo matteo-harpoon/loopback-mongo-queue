@@ -7,7 +7,7 @@ EventEmitter = require('events').EventEmitter;
 module.exports = function(WatchDog) {
   WatchDog.mixin(EventEmitter);
   WatchDog.prototype._getTimedOutJob = function(callback) {
-    var Task, cb, options, query, sort, update;
+    var QTask, cb, options, query, sort, update;
     query = {
       status: 'dequeued',
       queue: this.queue.name,
@@ -27,8 +27,8 @@ module.exports = function(WatchDog) {
       }
     };
     cb = callback.bind(this);
-    Task = loopback.getModel('Task');
-    return Task.update(query, sort, update, options, function(err, doc) {
+    QTask = loopback.getModel('QTask');
+    return QTask.update(query, sort, update, options, function(err, doc) {
       return cb(err, doc ? new Model(doc) : doc);
     });
   };

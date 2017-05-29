@@ -1,5 +1,5 @@
 {
-  "name": "Workflow",
+  "name": "QQueue",
   "base": "PersistedModel",
   "mongodb": {
     "allowExtendedOperators": true
@@ -7,15 +7,11 @@
   "properties": {
     "name": {
       "type": "string",
-      "required": true
+      "default": "default"
     },
-    "chain": {
-      "type": [
-        "string"
-      ]
-    },
-    "queue": {
-      "type": "string"
+    "universal": {
+      "type": "boolean",
+      "default": false
     }
   },
   "validations": [],

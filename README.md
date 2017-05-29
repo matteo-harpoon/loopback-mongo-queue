@@ -4,30 +4,30 @@ loopback mongo based queue
 * model-config
 
 ```
-Queue:
+QQueue:
   dataSource: "mongo"
   public: false
 
-Workflow:
+QWorkflow:
   dataSource: "mongo"
   public: false
 
-Task:
+QTask:
   dataSource: "mongo"
 
-Worker:
+QWorker:
   dataSource: false
   public: false
 
-Log:
+QLog:
   dataSource: false
   public: false
 
-Profiler:
+QProfiler:
   dataSource: false
   public: false
 
-Step:
+QStep:
   dataSource: false
   public: false
 ```

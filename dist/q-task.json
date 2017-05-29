@@ -1,5 +1,5 @@
 {
-  "name": "Task",
+  "name": "QTask",
   "base": "PersistedModel",
   "strict": false,
   "mongodb": {
@@ -19,12 +19,12 @@
     },
     "status": {
       "type": "string",
-      "default": "queued"
+      "default": "qQueued"
     },
     "params": {
       "type": "object"
     },
-    "queue": {
+    "qQueue": {
       "type": "string",
       "default": "default"
     },
@@ -51,7 +51,7 @@
     "ended": {
       "type": "date"
     },
-    "enqueued": {
+    "enqQueued": {
       "type": "date",
       "defaultFn": "now"
     },
@@ -80,7 +80,7 @@
     },
     {
       "principalType": "Role",
-      "principalId": "workflow:read",
+      "principalId": "qWorkflow:read",
       "permission": "ALLOW",
       "accessType": "READ"
     }

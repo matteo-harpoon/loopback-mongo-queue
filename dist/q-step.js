@@ -3,38 +3,38 @@ var loopback,
 
 loopback = require('loopback');
 
-module.exports = function(Step) {
-  var Log;
-  Log = loopback.getModel('Log');
-  Step.prototype.end = function() {
+module.exports = function(QStep) {
+  var QLog;
+  QLog = loopback.getModel('QLog');
+  QStep.prototype.end = function() {
     return this.ended = Date.now();
   };
-  Step.prototype.info = function() {
+  QStep.prototype.info = function() {
     var args;
     args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-    this.logs.push(new Log({
+    this.qLogs.push(new QLog({
       type: 'info',
       args: args
     }));
     return this;
   };
-  Step.prototype.debug = function() {
+  QStep.prototype.debug = function() {
     var args;
     args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-    this.logs.push(new Log({
+    this.qLogs.push(new QLog({
       type: 'debug',
       args: args
     }));
     return this;
   };
-  return Step.prototype.error = function(error) {
+  return QStep.prototype.error = function(error) {
     if (error == null) {
       error = {};
     }
     if (!error instanceof Error) {
       return console.error(error, 'is not instance of error');
     }
-    this.logs.push(new Log({
+    this.qLogs.push(new QLog({
       type: 'error',
       args: [error.message, error.stack]
     }));

@@ -1,12 +1,12 @@
 {
-  "name": "Worker",
+  "name": "QWorker",
   "base": "Model",
   "properties": {
     "name": {
       "type": "string",
       "default": "default"
     },
-    "queues": {
+    "qQueues": {
       "type": "array"
     },
     "universal": {
