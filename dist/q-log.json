@@ -1,5 +1,5 @@
 {
-  "name": "QQLog",
+  "name": "QLog",
   "base": "TransientModel",
   "properties": {
     "args": {
