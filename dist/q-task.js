@@ -2,7 +2,7 @@
  * @Author: Matteo Zambon <Matteo>
  * @Date:   2017-05-29 12:00:02
  * @Last modified by:   Matteo
- * @Last modified time: 2017-05-30 02:31:09
+ * @Last modified time: 2017-05-30 02:35:41
  */
 
 var async, loopback;
@@ -30,11 +30,11 @@ module.exports = function(QTask) {
     return this.$timeout = parseInt(timeout, 10);
   };
   QTask.dequeue = function(options, callback) {
+    var connector, opts, query, sort, update;
+    connector = this.getConnector();
     if(!connector.name.match(/mongo/)) {
       return callback(null, null);
     }
-
-    var connector, opts, query, sort, update;
     if (callback === void 0) {
       callback = options;
       options = {};
@@ -71,7 +71,6 @@ module.exports = function(QTask) {
     opts = {
       "new": true
     };
-    connector = this.getConnector();
     return connector.connect(function() {
       var collection;
       collection = connector.collection(QTask.modelName);
