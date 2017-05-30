@@ -1,6 +1,6 @@
 {
   "name": "QLog",
-  "base": "TransientModel",
+  "base": "Model",
   "properties": {
     "args": {
       "type": "array"

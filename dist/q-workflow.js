@@ -37,7 +37,7 @@ module.exports = function(QWorkflow) {
     });
     return QTask.create(data, callback);
   };
-  return QWorkflow.prototype.deqQueue = function(options, callback) {
+  return QWorkflow.prototype.dequeue = function(options, callback) {
     var QTask;
     if (callback === void 0) {
       callback = options;
@@ -48,6 +48,6 @@ module.exports = function(QWorkflow) {
     }
     options.chain = this.chain;
     QTask = loopback.getModel('QTask');
-    return QTask.deqQueue(options, callback);
+    return QTask.dequeue(options, callback);
   };
 };

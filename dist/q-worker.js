@@ -107,7 +107,7 @@ module.exports = function(QWorker) {
     }
     if (qTask) {
       this.empty = 0;
-      this.emit('deqQueued', qTask);
+      this.emit('dequeued', qTask);
       this.work(qTask);
       return;
     }
@@ -130,9 +130,9 @@ module.exports = function(QWorker) {
     if (!this.working) {
       return this.emit('stopped');
     }
-    return this.deqQueue(this._poll.bind(this));
+    return this.dequeue(this._poll.bind(this));
   };
-  QWorker.prototype.deqQueue = function(callback) {
+  QWorker.prototype.dequeue = function(callback) {
     var data, qQueue;
     qQueue = this.qQueues.shift();
     this.qQueues.push(qQueue);
@@ -140,7 +140,7 @@ module.exports = function(QWorker) {
       minPriority: this.minPriority,
       callbacks: this.callbacks
     };
-    return qQueue.deqQueue(data, callback);
+    return qQueue.dequeue(data, callback);
   };
   QWorker.prototype.done = function(qTask, timer, err, result) {
     var finish;

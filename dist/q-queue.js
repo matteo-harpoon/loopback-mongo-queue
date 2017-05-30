@@ -40,7 +40,7 @@ module.exports = function(QQueue) {
     });
     return QTask.create(data, callback);
   };
-  return QQueue.prototype.deqQueue = function(options, callback) {
+  return QQueue.prototype.dequeue = function(options, callback) {
     var QTask;
     if (callback === void 0) {
       callback = options;
@@ -50,6 +50,6 @@ module.exports = function(QQueue) {
       options.qQueue = this.name;
     }
     QTask = loopback.getModel('QTask');
-    return QTask.deqQueue(options, callback);
+    return QTask.dequeue(options, callback);
   };
 };

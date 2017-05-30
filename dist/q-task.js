@@ -1,3 +1,10 @@
+/**
+ * @Author: Matteo Zambon <Matteo>
+ * @Date:   2017-05-29 12:00:02
+ * @Last modified by:   Matteo
+ * @Last modified time: 2017-05-30 02:31:09
+ */
+
 var async, loopback;
 
 loopback = require('loopback');
@@ -6,7 +13,7 @@ async = require('async');
 
 module.exports = function(QTask) {
   QTask.QUEUED = 'qQueued';
-  QTask.DEQUEUED = 'deqQueued';
+  QTask.DEQUEUED = 'dequeued';
   QTask.COMPLETE = 'complete';
   QTask.FAILED = 'failed';
   QTask.CANCELLED = 'cancelled';
@@ -22,7 +29,11 @@ module.exports = function(QTask) {
     }
     return this.$timeout = parseInt(timeout, 10);
   };
-  QTask.deqQueue = function(options, callback) {
+  QTask.dequeue = function(options, callback) {
+    if(!connector.name.match(/mongo/)) {
+      return callback(null, null);
+    }
+
     var connector, opts, query, sort, update;
     if (callback === void 0) {
       callback = options;
@@ -54,7 +65,7 @@ module.exports = function(QTask) {
     update = {
       $set: {
         status: QTask.DEQUEUED,
-        deqQueued: new Date
+        dequeued: new Date
       }
     };
     opts = {
