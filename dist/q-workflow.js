@@ -1,3 +1,10 @@
+/**
+ * @Author: Matteo Zambon <Matteo>
+ * @Date:   2017-05-29 12:00:02
+ * @Last modified by:   Matteo
+ * @Last modified time: 2017-05-31 03:43:20
+ */
+
 var loopback;
 
 loopback = require('loopback');
@@ -19,7 +26,7 @@ module.exports = function(QWorkflow) {
       return callback(null, new QTask(data));
     });
   };
-  QWorkflow.prototype.enqQueue = function(params, options, callback) {
+  QWorkflow.prototype.enqueue = function(params, options, callback) {
     var QTask, data;
     if (!callback && typeof options === 'function') {
       callback = options;
@@ -29,7 +36,7 @@ module.exports = function(QWorkflow) {
     data = new QTask({
       chain: this.chain,
       params: params,
-      qQueue: options.qQueue || this.qQueue,
+      queue: options.queue || this.queue,
       attempts: options.attempts,
       timeout: options.timeout,
       delay: options.delay,
@@ -44,7 +51,7 @@ module.exports = function(QWorkflow) {
       options = {};
     }
     if (!this.universal) {
-      options.qQueue = this.qQueue;
+      options.queue = this.queue;
     }
     options.chain = this.chain;
     QTask = loopback.getModel('QTask');

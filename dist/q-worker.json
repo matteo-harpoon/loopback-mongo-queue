@@ -6,7 +6,7 @@
       "type": "string",
       "default": "default"
     },
-    "qQueues": {
+    "queues": {
       "type": "array"
     },
     "universal": {

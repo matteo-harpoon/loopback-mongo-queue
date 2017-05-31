@@ -19,12 +19,12 @@
     },
     "status": {
       "type": "string",
-      "default": "qQueued"
+      "default": "queued"
     },
     "params": {
       "type": "object"
     },
-    "qQueue": {
+    "queue": {
       "type": "string",
       "default": "default"
     },
@@ -51,7 +51,7 @@
     "ended": {
       "type": "date"
     },
-    "enqQueued": {
+    "enqueued": {
       "type": "date",
       "defaultFn": "now"
     },

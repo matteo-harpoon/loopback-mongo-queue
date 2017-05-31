@@ -2,7 +2,7 @@
  * @Author: Matteo Zambon <Matteo>
  * @Date:   2017-05-29 12:00:02
  * @Last modified by:   Matteo
- * @Last modified time: 2017-05-30 02:35:41
+ * @Last modified time: 2017-05-31 03:42:44
  */
 
 var async, loopback;
@@ -12,7 +12,7 @@ loopback = require('loopback');
 async = require('async');
 
 module.exports = function(QTask) {
-  QTask.QUEUED = 'qQueued';
+  QTask.QUEUED = 'queued';
   QTask.DEQUEUED = 'dequeued';
   QTask.COMPLETE = 'complete';
   QTask.FAILED = 'failed';
@@ -45,8 +45,8 @@ module.exports = function(QTask) {
         $lte: new Date
       }
     };
-    if (options.qQueue) {
-      query.qQueue = options.qQueue;
+    if (options.queue) {
+      query.queue = options.queue;
     }
     if (options.chain) {
       query.chain = {
@@ -116,7 +116,7 @@ module.exports = function(QTask) {
   };
   QTask.prototype.cancel = function(callback) {
     if (this.status !== QTask.QUEUED) {
-      return callback(new Error('Only qQueued qTasks may be cancelled'));
+      return callback(new Error('Only queued qTasks may be cancelled'));
     }
     return this.update({
       status: QTask.CANCELLED,
@@ -139,15 +139,15 @@ module.exports = function(QTask) {
       wait = 50 * Math.pow(2, this.count);
       this.delay = new Date(new Date().getTime() + wait);
       this.count = this.count + 1;
-      return this.reenqQueue(callback);
+      return this.reenqueue(callback);
     } else {
       return this.fail(err, callback);
     }
   };
-  QTask.prototype.reenqQueue = function(callback) {
+  QTask.prototype.reenqueue = function(callback) {
     return this.update({
       status: QTask.QUEUED,
-      enqQueued: new Date,
+      enqueued: new Date,
       remaining: this.remaining,
       count: this.count,
       delay: this.delay

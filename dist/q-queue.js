@@ -1,3 +1,10 @@
+/**
+ * @Author: Matteo Zambon <Matteo>
+ * @Date:   2017-05-29 12:00:02
+ * @Last modified by:   Matteo
+ * @Last modified time: 2017-05-31 03:42:53
+ */
+
 var loopback;
 
 loopback = require('loopback');
@@ -9,7 +16,7 @@ module.exports = function(QQueue) {
       id: id
     };
     if (!this.universal) {
-      query.qQueue = this.name;
+      query.queue = this.name;
     }
     QTask = loopback.getModel('QTask');
     return QTask.findOne(query, function(err, data) {
@@ -19,20 +26,20 @@ module.exports = function(QQueue) {
       return callback(null, new QTask(data));
     });
   };
-  QQueue.prototype.enqQueue = function(chain, params, options, callback) {
+  QQueue.prototype.enqueue = function(chain, params, options, callback) {
     var QTask, data;
     if (!callback && typeof options === 'function') {
       callback = options;
       options = {};
     }
     if (!this.universal) {
-      options.qQueue = this.name;
+      options.queue = this.name;
     }
     QTask = loopback.getModel('QTask');
     data = new QTask({
       chain: chain,
       params: params,
-      qQueue: options.qQueue || this.name,
+      queue: options.queue || this.name,
       attempts: options.attempts,
       timeout: options.timeout,
       delay: options.delay,
@@ -47,7 +54,7 @@ module.exports = function(QQueue) {
       options = {};
     }
     if (!this.universal) {
-      options.qQueue = this.name;
+      options.queue = this.name;
     }
     QTask = loopback.getModel('QTask');
     return QTask.dequeue(options, callback);

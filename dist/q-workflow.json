@@ -14,7 +14,7 @@
         "string"
       ]
     },
-    "qQueue": {
+    "queue": {
       "type": "string"
     }
   },

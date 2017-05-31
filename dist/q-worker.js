@@ -1,3 +1,10 @@
+/**
+ * @Author: Matteo Zambon <Matteo>
+ * @Date:   2017-05-29 12:00:02
+ * @Last modified by:   Matteo
+ * @Last modified time: 2017-05-31 03:41:48
+ */
+
 var EventEmitter, loopback;
 
 loopback = require('loopback');
@@ -43,9 +50,9 @@ module.exports = function(QWorker) {
     var QQueue;
     this.callbacks = QWorker.callbacks;
     QQueue = loopback.getModel('QQueue');
-    if (!this.qQueues) {
+    if (!this.queues) {
       this.universal = true;
-      this.qQueues = [
+      this.queues = [
         new QQueue({
           name: '*',
           universal: true
@@ -53,17 +60,17 @@ module.exports = function(QWorker) {
       ];
       return;
     }
-    if (!Array.isArray(this.qQueues)) {
-      this.qQueues = [this.qQueues];
+    if (!Array.isArray(this.queues)) {
+      this.queues = [this.queues];
     }
-    return this.qQueues = this.qQueues.map(function(name) {
-      var qQueue;
+    return this.queues = this.queues.map(function(name) {
+      var queue;
       if (typeof name === 'string') {
-        qQueue = new QQueue({
+        queue = new QQueue({
           name: name
         });
       }
-      return qQueue;
+      return queue;
     });
   };
   QWorker.prototype.register = function(callbacks) {
@@ -75,7 +82,7 @@ module.exports = function(QWorker) {
     return results1;
   };
   QWorker.prototype.start = function() {
-    if (this.qQueues.length === 0) {
+    if (this.queues.length === 0) {
       return setTimeout(this.start.bind(this), this.interval);
     }
     this.working = true;
@@ -96,9 +103,9 @@ module.exports = function(QWorker) {
     }
     return this.once('stopped', callback);
   };
-  QWorker.prototype.addQQueue = function(qQueue) {
+  QWorker.prototype.addQueue = function(queue) {
     if (!this.universal) {
-      return this.qQueues.push(qQueue);
+      return this.queues.push(queue);
     }
   };
   QWorker.prototype._poll = function(err, qTask) {
@@ -112,10 +119,10 @@ module.exports = function(QWorker) {
       return;
     }
     this.emit('empty');
-    if (this.empty < this.qQueues.length) {
+    if (this.empty < this.queues.length) {
       this.empty++;
     }
-    if (this.empty === this.qQueues.length) {
+    if (this.empty === this.queues.length) {
       return this.pollTimeout = setTimeout((function(_this) {
         return function() {
           _this.pollTimeout = null;
@@ -133,14 +140,14 @@ module.exports = function(QWorker) {
     return this.dequeue(this._poll.bind(this));
   };
   QWorker.prototype.dequeue = function(callback) {
-    var data, qQueue;
-    qQueue = this.qQueues.shift();
-    this.qQueues.push(qQueue);
+    var data, queue;
+    queue = this.queues.shift();
+    this.queues.push(queue);
     data = {
       minPriority: this.minPriority,
       callbacks: this.callbacks
     };
-    return qQueue.dequeue(data, callback);
+    return queue.dequeue(data, callback);
   };
   QWorker.prototype.done = function(qTask, timer, err, result) {
     var finish;
