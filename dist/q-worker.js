@@ -2,7 +2,7 @@
  * @Author: Matteo Zambon <Matteo>
  * @Date:   2017-05-29 12:00:02
  * @Last modified by:   Matteo
- * @Last modified time: 2017-05-31 03:41:48
+ * @Last modified time: 2017-09-06 01:55:27
  */
 
 var EventEmitter, loopback;
@@ -65,7 +65,9 @@ module.exports = function(QWorker) {
     }
     return this.queues = this.queues.map(function(name) {
       var queue;
-      if (typeof name === 'string') {
+      if (name instanceof QQueue) {
+        queue = name;
+      } else if (typeof name === 'string') {
         queue = new QQueue({
           name: name
         });
@@ -187,9 +189,9 @@ module.exports = function(QWorker) {
     }
     return qTask.process(this.callbacks, done);
   };
-  process.nextTick(function() {
-    var qWorker;
-    qWorker = new QWorker();
-    return qWorker.start();
-  });
+  // process.nextTick(function() {
+  //   var qWorker;
+  //   qWorker = new QWorker();
+  //   return qWorker.start();
+  // });
 };
