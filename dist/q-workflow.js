@@ -2,7 +2,7 @@
  * @Author: Matteo Zambon <Matteo>
  * @Date:   2017-05-29 12:00:02
  * @Last modified by:   Matteo
- * @Last modified time: 2017-05-31 03:43:20
+ * @Last modified time: 2017-09-13 04:29:44
  */
 
 var loopback;
@@ -38,6 +38,7 @@ module.exports = function(QWorkflow) {
       params: params,
       queue: options.queue || this.queue,
       attempts: options.attempts,
+      remaining: options.attempts,
       timeout: options.timeout,
       delay: options.delay,
       priority: options.priority

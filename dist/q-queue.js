@@ -2,7 +2,7 @@
  * @Author: Matteo Zambon <Matteo>
  * @Date:   2017-05-29 12:00:02
  * @Last modified by:   Matteo
- * @Last modified time: 2017-05-31 03:42:53
+ * @Last modified time: 2017-09-13 04:29:53
  */
 
 var loopback;
@@ -41,6 +41,7 @@ module.exports = function(QQueue) {
       params: params,
       queue: options.queue || this.name,
       attempts: options.attempts,
+      remaining: options.attempts,
       timeout: options.timeout,
       delay: options.delay,
       priority: options.priority
