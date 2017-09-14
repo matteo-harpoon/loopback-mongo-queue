@@ -2,7 +2,7 @@
  * @Author: Matteo Zambon <Matteo>
  * @Date:   2017-05-29 12:00:02
  * @Last modified by:   Matteo
- * @Last modified time: 2017-05-31 03:42:44
+ * @Last modified time: 2017-09-14 10:30:38
  */
 
 var async, loopback;
@@ -135,7 +135,7 @@ module.exports = function(QTask) {
     if (this.attempts) {
       this.remaining = this.remaining - 1;
     }
-    if (this.attempts !== this.count || this.remaining > 0) {
+    if (this.attempts !== this.count && this.remaining > 0) {
       wait = 50 * Math.pow(2, this.count);
       this.delay = new Date(new Date().getTime() + wait);
       this.count = this.count + 1;
